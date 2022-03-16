@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Request Explorer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="./img/speedometer-black-60.png">
+    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./request-explorer.css">
+    <style>
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./request-explorer-config.js" defer></script>
+    <script src="./request-explorer-menu.js" defer></script>
+    <script src="./request-explorer.js" defer></script>
+    <script>
+    </script>
+</head>
+
+<body>
+    <header class="obscure">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="./img/speedometer-white-60.svg" alt="">
+                <span>Request Explorer : <span id="file-name" default-value="No Data Loaded"></span></span>
+            </a>
+        <!-- Dropdown -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar1">
+          <ul class="navbar-nav ml-auto">
+              <!-- Property/Row Menu -->
+              <li class="nav-item dropdown  pull-left">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarPropMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Properties (Rows)
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarPropMenuLink">
+                  <h1 class="dropdown-header">Selection</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-unselect">Unselect Properties Only</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-unselect-all">Unselect All</a>
+                  <div class="dropdown-divider"></div>
+                  <h1 class="dropdown-header">Rows</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-hide">Hide Unselected</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-show">Show Unselected</a>
+                  <div class="dropdown-divider"></div>
+                  <h1 class="dropdown-header">Row Groups</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-collapse">Collapse All</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-prop-expand">Expand All</a>
+                </div>
+              </li>
+              <!-- Request/Col Menu -->
+              <li class="nav-item dropdown  pull-left">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarReqMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Requests (Columns)
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarReqMenuLink">
+                  <h1 class="dropdown-header">Selection</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-select-by-prop">Select by Property</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-select-shown">Select Requests Shown</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-unselect">Unselect Requests Only</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-unselect-all">Unselect All</a>
+                  <div class="dropdown-divider"></div>
+                  <h1 class="dropdown-header">Filtering</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-filter-by-prop-and">Filter by Property (INTERSECTION)</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-filter-by-prop-or">Filter by Property (UNION)</a>
+                  <div class="dropdown-divider"></div>
+                  <h1 class="dropdown-header">Columns</h1>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-hide">Hide Unselected</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-req-show">Show Unselected</a>
+                </div>
+              </li>
+              <!-- Data Menu -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDataMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Data
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDataMenuLink">
+                  <!--<h1 class="dropdown-header">Data</h1>-->
+                  <a class="dropdown-item" href="#" id="menu-data-load">Load Request Data</a>
+                  <a class="dropdown-item data-required" href="#" id="menu-data-clear">Clear Request Data</a>
+                </div>
+              </li>
+              <!-- Help Link -->
+              <li>
+                <a class="nav-link" href="#" id="menu-help">Help</a>
+              </li>
+          </ul>
+        </div>
+    </nav>
+    </header>
+    <!-- Hidden File Input -->
+    <input type="file" id="process-file" class="hidden" onchange="processFile()">
+    <section id="output"></section>
+    <!-- Modal - https://getbootstrap.com/docs/4.6/components/modal/ -->
+   <div class="modal fade" id="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title bold">Modal title</h5>
+          <span class="modal-close" data-dismiss="modal">✕</span>
+        </div>
+        <div class="modal-body">
+          Modal body text goes here.
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Scripts -->
+    <script src="./dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./request-explorer-iso3166.js"></script>
+</body>
+
+</html>
