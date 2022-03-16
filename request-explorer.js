@@ -1,6 +1,9 @@
 var sortedData = [];
 var reqWarningThreshold = 250;
 
+function tagIt(t,c,a={}) {
+    return `<${t}${Object.entries(a).map(p => ` ${p[0]}="${p[1]}"`).join('')}>${c}</${t}>`;
+};
 
 function getValue(g,d) {
     let dValue = '';
@@ -8,11 +11,15 @@ function getValue(g,d) {
         if ('subkey' in g) {
             if (Array.isArray(d[g.key])) {
                 let tmp = d[g.key].filter(t => t[0].toLowerCase() == g.subkey.toLowerCase());
-                if (tmp.length == 1) dValue = tmp[0][1];
+                dValue = (tmp.length == 1) ? tmp[0][1] : dValue = tagIt('span',`No "${g.subkey}" data`,{order:2,class:'val-issue'});
+            } else {
+                dValue = tagIt('span',`No "${g.key}" data`,{order:1,class:'val-issue'});
             }
         } else {
             dValue = d[g.key];
         }
+    } else {
+        dValue = tagIt('span',`No "${g.key}" data`,{order:1,class:'val-issue'});
     }
     return dValue;
 }
@@ -244,7 +251,7 @@ function displayData() {
                             eTbodyTrs[gIndex].push(document.createElement('tr'));
                             eTbodyTrs[gIndex][vIndex].className = `${g.label}-${vIndex}`;
                             eTbodyTrs[gIndex][vIndex].setAttribute('val', vIndex);
-                            eTd1.innerText = (valueGroups[gIndex].iso3166) ? iso3166(value) : value;
+                            eTd1.innerHTML = (valueGroups[gIndex].iso3166) ? iso3166(value) : value;
                             eTd2.innerText = g.counts[value];
                             eTd2.className = 'clickable';
                             eTd2.addEventListener("click", selectCell);

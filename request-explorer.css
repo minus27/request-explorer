@@ -67,6 +67,11 @@ section {
     background-color: purple !important;
 }
 
+.val-issue {
+    color: red;
+    font-style: italic;
+}
+
 .req-selected {
     background-color: yellow !important;
 }

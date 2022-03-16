@@ -135,9 +135,6 @@ function selectReqsByGrpVal(bFilter = null) {
 }
 
 function showInitialSplashScreen() {
-    function tagIt(t,c,a={}) {
-        return `<${t}${Object.entries(a).map(p => ` ${p[0]}="${p[1]}"`).join('')}>${c}</${t}>`;
-    };
     let docsLink = tagIt('a','here',{href:'https://docs.fastly.com/signalsciences/developer/extract-your-data/',target:'_blank'}),
         loadLink = tagIt('a','here',{href:'#',onclick:'$(\'#modal\').modal(\'hide\');loadData()'}),
         tmp = [
