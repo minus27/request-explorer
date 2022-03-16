@@ -82,11 +82,13 @@ function processFile() {
         updateFileName();
 
         eTime.log(`Data Load Loaded (${loadedData.length} requests)`);
-        sortedData = loadedData.sort(function (a, b) {
-            var a1 = a.id.toLowerCase(), b1 = b.id.toLowerCase();
-            if (a1 == b1) return 0;
-            return a1 > b1 ? 1 : -1;
-        });
+        sortedData = loadedData
+            .filter(d => idFilter.length == 0 || idFilter.includes(d.id))
+            .sort(function (a, b) {
+                var a1 = a.id.toLowerCase(), b1 = b.id.toLowerCase();
+                if (a1 == b1) return 0;
+                return a1 > b1 ? 1 : -1;
+            });
         eTime.log(`Data Sorted (${sortedData.length} requests)`);
         processData();
         eTime.log(`Data Processed`);
@@ -135,6 +137,9 @@ function selectReqsByGrpVal(bFilter = null) {
 }
 
 function showInitialSplashScreen() {
+    function tagIt(t,c,a={}) {
+        return `<${t}${Object.entries(a).map(p => ` ${p[0]}="${p[1]}"`).join('')}>${c}</${t}>`;
+    };
     let docsLink = tagIt('a','here',{href:'https://docs.fastly.com/signalsciences/developer/extract-your-data/',target:'_blank'}),
         loadLink = tagIt('a','here',{href:'#',onclick:'$(\'#modal\').modal(\'hide\');loadData()'}),
         tmp = [

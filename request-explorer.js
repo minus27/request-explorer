@@ -1,4 +1,5 @@
 var sortedData = [];
+var idFilter = [];
 var reqWarningThreshold = 250;
 
 function tagIt(t,c,a={}) {
@@ -11,16 +12,17 @@ function getValue(g,d) {
         if ('subkey' in g) {
             if (Array.isArray(d[g.key])) {
                 let tmp = d[g.key].filter(t => t[0].toLowerCase() == g.subkey.toLowerCase());
-                dValue = (tmp.length == 1) ? tmp[0][1] : dValue = tagIt('span',`No "${g.subkey}" data`,{order:2,class:'val-issue'});
+                dValue = (tmp.length == 1) ? tmp[0][1] : dValue = tagIt('span',`No data for "${g.subkey}"`,{order:2,class:'val-issue'});
             } else {
-                dValue = tagIt('span',`No "${g.key}" data`,{order:1,class:'val-issue'});
+                dValue = tagIt('span',`No data for "${g.key}"`,{order:1,class:'val-issue'});
             }
         } else {
             dValue = d[g.key];
         }
     } else {
-        dValue = tagIt('span',`No "${g.key}" data`,{order:1,class:'val-issue'});
+        dValue = tagIt('span',`No data for "${g.key}"`,{order:1,class:'val-issue'});
     }
+    if (dValue == '') dValue = tagIt('span',`Empty string`,{order:3,class:'val-issue'});
     return dValue;
 }
 
