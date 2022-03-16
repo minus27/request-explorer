@@ -1,10 +1,26 @@
 var sortedData = [];
 var reqWarningThreshold = 250;
 
+
+function getValue(g,d) {
+    let dValue = '';
+    if (g.key in d) {
+        if ('subkey' in g) {
+            if (Array.isArray(d[g.key])) {
+                let tmp = d[g.key].filter(t => t[0].toLowerCase() == g.subkey.toLowerCase());
+                if (tmp.length == 1) dValue = tmp[0][1];
+            }
+        } else {
+            dValue = d[g.key];
+        }
+    }
+    return dValue;
+}
+
 function inventoryData() {
     valueGroups = valueGroups.filter(g => !(g.key.startsWith('#')));
     sortedData
-        .forEach((d, dIndex) => {
+        .forEach((d, dIndex) => { console.log(`${dIndex}) ${d.id}`)
             valueGroups
                 .forEach(g => {
                     if (dIndex == 0) {
@@ -15,21 +31,22 @@ function inventoryData() {
                             if ('subkey' in g) g.label += ` : ${g.subkey}`;
                         }
                     }
+
+                    switch (g.key) {
+                        case 'path':
+                            d[g.key] = d[g.key].replace(/(\d{13})$/,function(m,p){return "*".repeat(p.length);});
+                            break;
+                    }
+                    
                     if (g.key != 'tags') {
-                        let dValue = null;
-                        if ('subkey' in g) {
-                            //if (dIndex == 0) g.label += ` : ${g.subkey}`;
-                            let tmp = d[g.key].filter(t => t[0] == g.subkey);
-                            if (tmp.length == 1) dValue = tmp[0][1];
-                        } else {
-                            dValue = d[g.key];
-                        }
+                        let dValue = getValue(g,d);
                         if (!g.values.includes(dValue)) {
                             g.values.push(dValue);
                             g.counts[dValue] = 0;
                         }
                         g.counts[dValue] += 1;
                     } else {
+                        // Future - add exception handling for no tags
                         d.tags.forEach(t => {
                             let dValue = t.type;
                             if (!g.values.includes(dValue)) {
@@ -239,13 +256,7 @@ function displayData() {
                     }
 
                     if (g.key != 'tags') {
-                        let dValue = null;
-                        if ('subkey' in g) {
-                            let tmp = d[g.key].filter(t => t[0] == g.subkey);
-                            if (tmp.length == 1) dValue = tmp[0][1];
-                        } else {
-                            dValue = d[g.key];
-                        }
+                        let dValue = getValue(g,d);
                         g.values.forEach((value, vIndex) => {
                             createGridCell(eTbodyTrs[gIndex][vIndex], gIndex, vIndex, dIndex, vIndex == g.values.indexOf(dValue));
                         });
